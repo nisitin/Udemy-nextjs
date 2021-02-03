@@ -21,6 +21,7 @@ const Login = () => {
             .createUserWithEmailAndPassword(RegisterEmail, RegisterPass)
             .then((user) => {
                 console.log("REGISTER", user);
+                router.push("/")
             })
             .catch((err) => {
                 console.log(err);

@@ -2,3 +2,4 @@ Client/firebase.js
 node_modules/
 Client/.next
 Server/.env
+Server/firebase

@@ -1,7 +1,13 @@
-const express = require('express');
-const mongoose = require('mongoose');
+import express from "express";
+import mongoose from "mongoose"
+import cors from "cors"
+import { readdirSync } from "fs";
+const morgan = require('morgan')
+
 require('dotenv').config()
 
+
+//app
 const app = express();
 
 //db接続する処理を書く
@@ -15,11 +21,14 @@ mongoose
     .then(() => console.log(`DB Connected`))
     .catch((err) => console.log("DB connection error", err))
 
-app.get("/api/:message", (req, res) => {
-    res.json({
-        message: `Your message is received ${req.params.message}`
-    })
-})
+//middleware
+app.use(cors());
+app.use(morgan('dev'))
+
+//routes middleware 超えれはfsモジュールを使った読み込み式
+readdirSync("./routes").map((r) => app.use("/api", require(`./routes/${r}`)))
+// routes
+
 
 const port = process.env.PORT
 

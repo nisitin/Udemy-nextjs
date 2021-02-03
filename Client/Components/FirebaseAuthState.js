@@ -6,6 +6,8 @@
 import React, { useEffect, useContext } from "react";
 import firebase from "../firebase";
 import { Context } from "../context";
+import { axiosAuth } from "../actions/axios";
+import { setCookie, destroyCookie } from "nookies";
 
 const FirebaseAuthState = ({ children }) => {
     const { dispatch } = useContext(Context);
@@ -16,15 +18,27 @@ const FirebaseAuthState = ({ children }) => {
                 dispatch({
                     type: "LOGOUT",
                 });
+                destroyCookie(null, "token");
+                setCookie(null, "token", "", {});
             } else {
                 //ここでTokenを保持するような処理
                 const { token } = await user.getIdTokenResult();
+                // set token
+                destroyCookie(null, "token")
+                setCookie(null, "token", token, {});
                 console.log("TOKEN", token);
                 // send this token to backend
                 // backend will check if thie token is valid (using firebase admin tool)
                 // if it is verified, you get the same user information in the backend too
                 // then you can decide to either save this user in your database or update the existing user
                 // then send the user information back to client
+                axiosAuth.post("/current-user", {}).then((res) => {
+                    console.log("RES =====> ", res);
+                    dispatch({
+                        type: "LOGIN",
+                        payload: res.data,
+                    });
+                });
             }
         });
     }, []);
