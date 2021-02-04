@@ -4,9 +4,10 @@ import { useContext } from "react";
 const Home = () => {
     const { state } = useContext(Context)
     return (
-        <div>
+        <div className="container">
             <h2>Home page</h2>
-            {JSON.stringify(state)}
+            <p className="lead">This page is fro public it. If you login, you see your details here</p>
+            <pre>{JSON.stringify(state, null, 4)}</pre>
         </div>
     )
 }

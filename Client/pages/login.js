@@ -4,13 +4,14 @@ import { useRouter } from "next/router";
 import LoginRegisterForm from "../Components/LoginRegisterForm";
 import { ToastContainer, toast } from 'react-toastify';
 import { Button } from "antd";
-import { GoogleOutlined } from "@ant-design/icons"
+import { GoogleOutlined, SyncOutlined } from "@ant-design/icons"
 
 const Login = () => {
     const [loginEmail, setLoginEmail] = useState("sample@gmail.com");
     const [loginPass, setLoginPass] = useState("rrrrrrrr");
     const [RegisterEmail, setRegisterEmail] = useState("");
     const [RegisterPass, setRegisterPass] = useState("");
+    const [loading, setLoading] = useState('');
     const router = useRouter();
 
 
@@ -40,6 +41,7 @@ const Login = () => {
             .catch((err) => {
                 console.log(err);
                 toast(err.message)
+                setLoading(true)
             });
     };
 
@@ -53,6 +55,7 @@ const Login = () => {
             .catch((err) => {
                 console.log(err);
                 toast(err.message);
+                setLoading(false)
             });
     };
 
@@ -60,7 +63,7 @@ const Login = () => {
 
     return (
         <div className="container">
-            <h2 className="text-center pt-4 display-4">Login / Register</h2>
+            <h2 className="text-center pt-4 display-4">{loading ? <SyncOutlined spin className="text-danger" /> : "Login / Register"}</h2>
             <Button
                 onClick={googleLogin}
                 className="mb-3 col-md-6 offset-md-3"

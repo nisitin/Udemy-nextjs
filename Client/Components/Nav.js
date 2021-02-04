@@ -26,6 +26,10 @@ const Nav = () => {
                 <a className="nav-link">Home</a>
             </Link>
 
+            <Link href={user ? "/hotel/new" : "/login"}>
+                <a className="nav-link">Submit Hotel</a>
+            </Link>
+
             {user ? (
 
                 <a onClick={handleLogout} className="nav-link">
