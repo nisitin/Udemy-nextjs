@@ -4,7 +4,8 @@ import { useRouter } from "next/router";
 import LoginRegisterForm from "../Components/LoginRegisterForm";
 import { ToastContainer, toast } from 'react-toastify';
 import { Button } from "antd";
-import { GoogleOutlined, SyncOutlined } from "@ant-design/icons"
+import { GoogleOutlined, SyncOutlined } from "@ant-design/icons";
+import Link from "next/link"
 
 const Login = () => {
     const [loginEmail, setLoginEmail] = useState("sample@gmail.com");
@@ -95,6 +96,11 @@ const Login = () => {
                     handleSubmit={register}
                     buttonName="Register"
                 />
+            </div>
+            <div className="d-flex">
+                <Link href="/reset-password">
+                    <a className="btn btn-outline-danger btn-sm mt-5">Reset password</a>
+                </Link>
             </div>
         </div>
     )
